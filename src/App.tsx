@@ -119,7 +119,7 @@ const App = () => {
               
               {/* BARIS 6: INSTRUKSI FINAL DENGAN LOT & SL */}
               <tr>
-                <td style={{ padding: '20px', color: '#94a3b8' }}>6. INSTRUKSI</td>
+                <td style={{ padding: '20px', color: '#94a3b8' }}>INSTRUKSI</td>
                 <td colSpan={2} style={{ padding: '20px', backgroundColor: '#0f172a' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     
