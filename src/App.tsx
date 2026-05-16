@@ -93,12 +93,47 @@ const App = () => {
         <div style={{ background: '#1e293b', borderRadius: '8px', overflow: 'hidden' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: '#334155', textAlign: 'left' }}>
-                <th style={{ padding: '15px' }}>INDIKATOR</th>
-                <th style={{ padding: '15px' }}>SAHAM</th>
-                <th style={{ padding: '15px' }}>KRIPTO</th>
-              </tr>
-            </thead>
+  {/* BARIS INPUT BARU: Urutan Saldo (RDN) - Stock - Crypto */}
+  <tr style={{ background: '#1e293b' }}>
+    {/* Kolom 1: Sekarang diisi Cash RDN (Saldo) */}
+    <td style={{ padding: '10px 15px' }}>
+      <input 
+        type="number" 
+        value={units.rdn ? units.rdn : ''} 
+        onChange={(e) => setUnits({...units, rdn: Number(e.target.value)})} 
+        placeholder="Cash RDN" 
+        style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px', width: '100%', boxSizing: 'border-box', textAlign: 'center' }} 
+      />
+    </td>
+    
+    {/* Kolom 2: Sekarang diisi Stock */}
+    <td style={{ padding: '10px 15px' }}>
+      <input 
+        placeholder="Stock" 
+        value={inputStock} 
+        onChange={(e) => setInputStock(e.target.value.toUpperCase())} 
+        style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px', width: '100%', boxSizing: 'border-box', textAlign: 'center' }} 
+      />
+    </td>
+
+    {/* Kolom 3: Sekarang diisi Crypto */}
+    <td style={{ padding: '10px 15px' }}>
+      <input 
+        placeholder="Crypto" 
+        value={inputCrypto} 
+        onChange={(e) => setInputCrypto(e.target.value.toUpperCase())} 
+        style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px', width: '100%', boxSizing: 'border-box', textAlign: 'center' }} 
+      />
+    </td>
+  </tr>
+
+  {/* BARIS NAMA KOLOM: Menyesuaikan Urutan Baru */}
+  <tr style={{ background: '#334155', textAlign: 'left' }}>
+    <th style={{ padding: '15px' }}>INDIKATOR</th> {/* Kolom 1 (Sejajar dengan Saldo RDN di bawah) */}
+    <th style={{ padding: '15px' }}>SAHAM</th>     {/* Kolom 2 (Sejajar dengan Data Stock di bawah) */}
+    <th style={{ padding: '15px' }}>KRIPTO</th>    {/* Kolom 3 (Sejajar dengan Data Crypto di bawah) */}
+  </tr>
+</thead>
             <tbody>
               <tr style={{ borderBottom: '1px solid #334155' }}>
                 <td style={{ padding: '15px', color: '#94a3b8' }}>STATUS</td>
