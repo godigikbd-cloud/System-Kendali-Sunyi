@@ -146,6 +146,78 @@ const App = () => {
               <tr>
                 <td style={{ padding: '15px 10px', color: '#94a3b8', verticalAlign: 'top' }}>INSTRUKSI</td>
                 <td colSpan={2} style={{ padding: '15px 10px', backgroundColor: '#0f172a' }}>
+return (
+    <div style={{ backgroundColor: '#0f172a', color: '#f1f5f9', minHeight: '100vh', padding: '15px', fontFamily: 'monospace' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+          <h1 style={{ color: '#38bdf8', fontSize: '1.1rem', margin: 0 }}>SISTEM KENDALI SUNYI v2.2</h1>
+          <button onClick={refreshAllData} style={{ background: '#38bdf8', border: 'none', padding: '10px 15px', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.8rem' }}>
+            {loading ? 'ANALYZING...' : 'REFRESH SYSTEM'}
+          </button>
+        </header>
+
+        <div style={{ background: '#1e293b', borderRadius: '8px', overflow: 'hidden' }}>
+          {/* tableLayout: 'fixed' memaksa browser membagi 3 kolom sama rata di HP */}
+          <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+            <thead>
+              {/* BARIS INPUT: Urutan Fleksibel Saldo (RDN) - Stock - Crypto */}
+              <tr style={{ background: '#1e293b' }}>
+                <td style={{ padding: '10px 8px' }}>
+                  <input 
+                    type="number" 
+                    value={units.rdn || ''} 
+                    onChange={(e) => setUnits({...units, rdn: Number(e.target.value)})} 
+                    placeholder="Cash RDN" 
+                    style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px 4px', width: '100%', boxSizing: 'border-box', textAlign: 'center', fontSize: '0.85rem', borderRadius: '4px' }} 
+                  />
+                </td>
+                <td style={{ padding: '10px 8px' }}>
+                  <input 
+                    placeholder="Stock" 
+                    value={inputStock} 
+                    onChange={(e) => setInputStock(e.target.value.toUpperCase())} 
+                    style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px 4px', width: '100%', boxSizing: 'border-box', textAlign: 'center', fontSize: '0.85rem', borderRadius: '4px' }} 
+                  />
+                </td>
+                <td style={{ padding: '10px 8px' }}>
+                  <input 
+                    placeholder="Crypto" 
+                    value={inputCrypto} 
+                    onChange={(e) => setInputCrypto(e.target.value.toUpperCase())} 
+                    style={{ background: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px 4px', width: '100%', boxSizing: 'border-box', textAlign: 'center', fontSize: '0.85rem', borderRadius: '4px' }} 
+                  />
+                </td>
+              </tr>
+
+              {/* NAMA HEADER KOLOM ASLI (Tetap Sejajar dengan Tbody Anda) */}
+              <tr style={{ background: '#334155', textAlign: 'left', fontSize: '0.85rem' }}>
+                <th style={{ padding: '12px 10px' }}>INDIKATOR</th>
+                <th style={{ padding: '12px 10px' }}>SAHAM</th>
+                <th style={{ padding: '12px 10px' }}>KRIPTO</th>
+              </tr>
+            </thead>
+            
+            <tbody style={{ fontSize: '0.85rem' }}>
+              <tr style={{ borderBottom: '1px solid #334155' }}>
+                <td style={{ padding: '12px 10px', color: '#94a3b8' }}>STATUS</td>
+                <td style={{ padding: '12px 10px', color: stockAI.color, fontWeight: 'bold' }}>{stockAI.label}</td>
+                <td style={{ padding: '12px 10px', color: cryptoAI.color, fontWeight: 'bold' }}>{cryptoAI.label}</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid #334155' }}>
+                <td style={{ padding: '12px 10px', color: '#94a3b8' }}>HARGA RIIL</td>
+                <td style={{ padding: '12px 10px' }}>IDR {data.stock?.price?.toLocaleString() || '0'}</td>
+                <td style={{ padding: '12px 10px' }}>IDR {data.crypto?.price?.toLocaleString() || '0'}</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid #334155' }}>
+                <td style={{ padding: '12px 10px', color: '#94a3b8' }}>TARGET JUNI 2026</td>
+                <td colSpan={2} style={{ padding: '12px 10px' }}>
+                  Sisa Kekurangan: <span style={{ color: '#fbbf24' }}>IDR {targetGap.toLocaleString()}</span>
+                </td>
+              </tr>
+              
+              <tr>
+                <td style={{ padding: '15px 10px', color: '#94a3b8', verticalAlign: 'top' }}>INSTRUKSI</td>
+                <td colSpan={2} style={{ padding: '15px 10px', backgroundColor: '#0f172a' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     
                     {/* SAHAM */}
@@ -177,45 +249,6 @@ const App = () => {
                               <div style={{ color: '#38bdf8', marginBottom: '5px' }}>EKSEKUSI BERTAHAP.</div>
                               <div style={{ color: '#f87171' }}>
                                 PROTEKSI: Batasi risiko maksimal 5% di <span style={{ fontWeight: 'bold' }}>IDR {Math.floor(data.crypto.price * 0.95).toLocaleString()}</span>.
-                              </div>
-                            </>
-                          ) : "MONITORING SAJA."}
-                        </div>
-                      </div>
-                    )}
-
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;
-                              </div>
-                              <div style={{ fontSize: '13px', color: '#94a3b8' }}>
-                                PROTEKSI: Pasang SL di <span style={{ color: '#f87171', fontWeight: 'bold' }}>IDR {Math.floor(data.stock.price * 0.96).toLocaleString()}</span> (Cut Loss 4%) atau di bawah MA 20 (IDR {data.stock.ma20?.toLocaleString() || '-'}).
-                              </div>
-                            </>
-                          ) : `MONITORING: ${stockAI.text}`}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* KRIPTO: POL / BTC */}
-                    {data.crypto?.price > 0 && (
-                      <div style={{ padding: '15px', borderLeft: `4px solid ${cryptoAI.color}`, background: '#1e293b' }}>
-                        <div style={{ fontWeight: 'bold', color: cryptoAI.color, marginBottom: '5px' }}>PERINTAH KRIPTO ({inputCrypto}):</div>
-                        <div>
-                          {cryptoAI.label === '[ACCUMULATE]' ? (
-                            <>
-                              <div style={{ color: '#38bdf8', marginBottom: '5px' }}>EKSEKUSI BERTAHAP.</div>
-                              <div style={{ fontSize: '13px', color: '#94a3b8' }}>
-                                PROTEKSI: Batasi risiko maksimal 5% di <span style={{ color: '#f87171', fontWeight: 'bold' }}>IDR {Math.floor(data.crypto.price * 0.95).toLocaleString()}</span>.
                               </div>
                             </>
                           ) : "MONITORING SAJA."}
