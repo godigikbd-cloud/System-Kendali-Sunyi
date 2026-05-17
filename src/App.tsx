@@ -167,22 +167,31 @@ const App = () => {
                       </div>
                     )}
 
-                    {/* KRIPTO */}
-                    {data.crypto?.price > 0 && (
-                      <div style={{ padding: '12px', borderLeft: `4px solid ${cryptoAI.color}`, background: '#1e293b' }}>
-                        <div style={{ fontWeight: 'bold', color: cryptoAI.color, marginBottom: '5px', fontSize: '0.85rem' }}>PERINTAH KRIPTO ({inputCrypto}):</div>
-                        <div style={{ fontSize: '0.8rem' }}>
-                          {cryptoAI.label === '[ACCUMULATE]' ? (
-                            <>
-                              <div style={{ color: '#38bdf8', marginBottom: '5px' }}>EKSEKUSI BERTAHAP.</div>
-                              <div style={{ color: '#f87171' }}>
-                                PROTEKSI: Batasi risiko maksimal 5% di <span style={{ fontWeight: 'bold' }}>IDR {Math.floor(data.crypto.price * 0.95).toLocaleString()}</span>.
-                              </div>
-                            </>
-                          ) : "MONITORING SAJA."}
-                        </div>
-                      </div>
-                    )}
+                    {/* KRIPTO (SUDAH DI-UPGRADE DINAMIS) */}
+{data.crypto?.price > 0 && (
+  <div style={{ padding: '12px', borderLeft: `4px solid ${cryptoAI.color}`, background: '#1e293b' }}>
+    <div style={{ fontWeight: 'bold', color: cryptoAI.color, marginBottom: '5px', fontSize: '0.85rem' }}>
+      PERINTAH KRIPTO ({inputCrypto}):
+    </div>
+    <div style={{ fontSize: '0.8rem' }}>
+      {cryptoAI.label === '[ACCUMULATE]' ? (
+        <>
+          <div style={{ color: '#4ade80', marginBottom: '5px' }}>
+            HAJAR KANAN: Maksimal <span style={{ fontWeight: 'bold' }}>{(units.rdn / data.crypto.price).toFixed(4)} {inputCrypto}</span>.
+          </div>
+          <div style={{ color: '#38bdf8', marginBottom: '5px' }}>
+            TAKE PROFIT (TP): Jual di <span style={{ fontWeight: 'bold' }}>IDR {Math.floor(data.crypto.price * 1.10).toLocaleString()}</span> (Target +10%).
+          </div>
+          <div style={{ color: '#94a3b8' }}>
+            PROTEKSI: Pasang SL di <span style={{ color: '#f87171', fontWeight: 'bold' }}>IDR {Math.floor(data.crypto.price * 0.95).toLocaleString()}</span> (Cut Loss 5%).
+          </div>
+        </>
+      ) : (
+        <div style={{ color: '#94a3b8' }}>MONITORING: {cryptoAI.text}</div>
+      )}
+    </div>
+  </div>
+)}
 
                   </div>
                 </td>
